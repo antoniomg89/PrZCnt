@@ -32,9 +32,9 @@ function validacionHora() {
     req.send(null);
 
     if (req.status == 200){
-        let s = server.getH();
+        //let s = server.getH();
         let res1 = req.responseText.split('"');
-        res1 = s.split('"');
+        //res1 = s.split('"');
         let res2 = res1[1].split(':');
         let rs = parseInt(res2[0])*3600 + parseInt(res2[1])*60 + parseInt(res2[2]);
         let d = new Date();
@@ -42,7 +42,7 @@ function validacionHora() {
         let dif = sa-rs;
 
         if (dif > 0 && dif <= 300) {
-            //console.log('La diferencia de horas no supera los 5 minutos. Mostrar la cuenta atras');
+            console.log('La diferencia de horas no supera los 5 minutos. Mostrar la cuenta atras');
             getCA(300-dif,gca);
         }
     
