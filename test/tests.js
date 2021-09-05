@@ -1,7 +1,7 @@
 let expect  = require("chai").expect;
 //let request = require("request");
 
-let server = require('../server.js') 
+let server = require('../server.js'); 
 
 describe('Tests unitario', function(){
     describe('Validar hora', function(){
