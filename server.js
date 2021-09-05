@@ -73,9 +73,9 @@ function valHora(hora) {
     return er.test(hora);
 }
 
-function getH() {
+/*function getH() {
     return db.get('fecha').value();
-}
+}*/
 
 exports.valHora = valHora;
-exports.getH  = getH;
+//exports.getH  = getH;

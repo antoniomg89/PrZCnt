@@ -1,5 +1,5 @@
 const gca = document.getElementById('gca');
-let server = require('../server.js');
+//let server = require('../server.js');
 let url = 'https://cuenta-atras.herokuapp.com/getHora';
 
 let req = new XMLHttpRequest();
