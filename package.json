@@ -6,7 +6,7 @@
   "author": "",
   "license": "GPL-3.0",
   "scripts": {
-    "test": "mocha",
+    "test": "mocha --exit",
     "start": "node server.js"
   },
   "dependencies": {

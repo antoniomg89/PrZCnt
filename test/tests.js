@@ -12,14 +12,16 @@ describe('Tests unitarios', function(){
         let datetest = new Date();
         let horatest =  ((datetest.getUTCHours()+2)%24) + ':' + datetest.getUTCMinutes() + ':' + datetest.getUTCSeconds();
 
-        it('Resultado', function(){
+        it('Resultado', function(done){
             expect(server.valHora(horatest)).equal(true);
+            done();
         });
     });
 
     describe('Obtener hora db:', function(){
-        it('Resultado', function(){
+        it('Resultado', function(done){
             should.exist(server.getHora());
+            done();
         });
     });
 
@@ -27,19 +29,20 @@ describe('Tests unitarios', function(){
         let datetest = new Date();
         let horatestv =  datetest.getUTCSeconds() + datetest.getUTCMinutes()*60 + ((datetest.getUTCHours()+2)%24)*3600;
         let dif = (horatestv+240) - horatestv;
-        it('Resultado', function(){
+        it('Resultado', function(done){
             expect(server.resVal(dif)).equal(true);
+            done();
         });
     });
 });
 
 describe('Tests funcionales', function(){
     describe('Estado del servidor /getHora:', function(){
-        it("returns status 200", function() {
+        it("returns status 200", function(done) {
             request(url, function(error, response, body) {
               expect(response.statusCode).to.equal(200);
+              done();
             });
           });
     });
-
 });
