@@ -8,19 +8,15 @@ const ruta = new sdb.localFileEngine("./db.stormdb");
 
 let dv,sv,sa,id_evento;
 let db = new sdb(ruta);
-let er = new RegExp(process.env.RE);
 
-firebase.initializeApp({
-    credential: firebase.credential.cert(JSON.parse(Buffer.from(process.env.SERVICE_ACCOUNT, 'base64').toString('ascii'))),
-    databaseURL: process.env.FBR
-});
-
-const fbdb = firebase.database();
+//const er = new RegExp(process.env.RE);
+const er = new RegExp('^(0{1}|[1-9]|1[0-9]|2[0-3]):(0{1}|[1-9]|1[0-9]|2[0-9]|3[0-9]|4[0-9]|5[0-9]):(0{1}|[1-9]|1[0-9]|2[0-9]|3[0-9]|4[0-9]|5[0-9])$');
 
 app.use(express.static('contador'));
 app.set('port', (process.env.PORT || 4000));
 
-app.get(process.env.H, (req, res) => {
+//app.get(process.env.H, (req, res) => {
+app.get('/setHora/:hora/:id/:agente', (req, res) => {
     if (valHora(req.params['hora'])) {
         console.log('Hora correcta: ' + req.params['hora']);
 
@@ -45,11 +41,11 @@ app.get(process.env.H, (req, res) => {
 
 app.get('/getHora', (req, res) => {
     res.send(db.get('fecha').value());
-})
+});
 
 app.listen(app.get('port'), () => {
     console.log('Estado del server: ON');
-})
+});
 
 function segundosVal() {
     let res2 = dv.split(':');
@@ -61,6 +57,13 @@ function segundosVal() {
 }
 
 function cHoras () {
+    firebase.initializeApp({
+        credential: firebase.credential.cert(JSON.parse(Buffer.from(process.env.SERVICE_ACCOUNT, 'base64').toString('ascii'))),
+        databaseURL: process.env.FBR
+    });
+    
+    const fbdb = firebase.database();
+
     let fbContador = fbdb.ref(process.env.FB1 + id_evento + process.env.FB2);
     let contador_actualizacion = {
         estado: 'false' 
@@ -73,9 +76,18 @@ function valHora(hora) {
     return er.test(hora);
 }
 
-/*function getH() {
+function getHora() {
     return db.get('fecha').value();
-}*/
+}
+
+function resVal(diferencia) {
+    if (diferencia > 0 && diferencia <= 300) {
+        return true;
+    } else {
+        return false;
+    }
+}
 
 exports.valHora = valHora;
-//exports.getH  = getH;
+exports.getHora = getHora;
+exports.resVal = resVal;
