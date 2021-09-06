@@ -6,7 +6,6 @@ let https = require('https');
 const fs = require('fs');
 
 const app = express();
-//const ruta = new sdb.localFileEngine("./db.hora");
 let cuenta_activa = false;
 let fb_iniciado = false;
 let db,ruta;
@@ -14,8 +13,6 @@ let db,ruta;
 let hora,sv,sa,id_evento;
 
 comprobarDB();
-
-//let db = new sdb(ruta);
 
 //const er = new RegExp(process.env.RE);
 const er = new RegExp('^(0{1}|[1-9]|1[0-9]|2[0-3]):(0{1}|[1-9]|1[0-9]|2[0-9]|3[0-9]|4[0-9]|5[0-9]):(0{1}|[1-9]|1[0-9]|2[0-9]|3[0-9]|4[0-9]|5[0-9])$');
@@ -43,8 +40,6 @@ app.get('/setHora/:hora/:id/:agente', (req, res) => {
 })
 
 app.get('/getHora', (req, res) => {
-    //res.send(db.get('fecha').value());
-    console.log('Hora solicitada de la db: ' + db.get('granada').get(0).get('hora').value());
     res.send(db.get('granada').get(0).get('hora').value());
 
 });
@@ -96,17 +91,8 @@ function valHora(hora) {
     return er.test(hora);
 }
 
-function getHora() {
-    //return db.get('fecha').value();
-    return db.get('granada').get(0).get('hora').value();
-}
-
 function setHora(h,i) {
-    /*db.get("fecha").delete();
-    db.default({ fecha: [] });
-    db.get('fecha').push(h);
-    db.save();*/
-
+    console.log('Hora: ' + h + ' id: ' + i);
     db.get('granada').delete();
     db.default({ granada: [] });
     db.get('granada').push({idev: i, hora: h}).save();  
@@ -129,7 +115,7 @@ function comprobarDB() {
         ruta = new sdb.localFileEngine('./db.hora');
         db = new sdb(ruta);
         db.default({ granada: [] });
-        db.get('granada').push([{idev: 'null', hora: 'null'}]).save();
+        db.get('granada').push({idev: 'null', hora: 'null'}).save();
         
       } else {
         console.log('Existe la db.');
@@ -142,5 +128,4 @@ function comprobarDB() {
   }
 
 exports.valHora = valHora;
-exports.getHora = getHora;
 exports.resVal = resVal;

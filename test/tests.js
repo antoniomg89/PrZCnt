@@ -1,5 +1,4 @@
 let expect  = require("chai").expect;
-let should = require("chai").should();
 let request = require("request");
 
 let url = 'https://cuenta-atras.herokuapp.com/getHora';
@@ -17,13 +16,6 @@ describe('Tests unitarios', function(){
             done();
         });
     });
-
-    /*describe('Obtener hora db:', function(){
-        it('Resultado', function(done){
-            should.exist(server.getHora());
-            done();
-        });
-    });*/
 
     describe('Funcionamiento diferencia horaria:', function(){
         let datetest = new Date();
