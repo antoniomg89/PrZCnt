@@ -44,6 +44,7 @@ app.get('/setHora/:hora/:id/:agente', (req, res) => {
 
 app.get('/getHora', (req, res) => {
     //res.send(db.get('fecha').value());
+    console.log('Hora solicitada de la db: ' + db.get('granada').get(0).get('hora').value());
     res.send(db.get('granada').get(0).get('hora').value());
 
 });
