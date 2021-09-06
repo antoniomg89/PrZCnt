@@ -3,14 +3,19 @@ const sdb = require("stormdb");
 const firebase = require("firebase-admin");
 require('dotenv').config();
 let https = require('https');
+const fs = require('fs');
 
 const app = express();
-const ruta = new sdb.localFileEngine("./db.stormdb");
+//const ruta = new sdb.localFileEngine("./db.hora");
 let cuenta_activa = false;
 let fb_iniciado = false;
+let db,ruta;
 
-let dv,sv,sa,id_evento;
-let db = new sdb(ruta);
+let hora,sv,sa,id_evento;
+
+comprobarDB();
+
+//let db = new sdb(ruta);
 
 //const er = new RegExp(process.env.RE);
 const er = new RegExp('^(0{1}|[1-9]|1[0-9]|2[0-3]):(0{1}|[1-9]|1[0-9]|2[0-9]|3[0-9]|4[0-9]|5[0-9]):(0{1}|[1-9]|1[0-9]|2[0-9]|3[0-9]|4[0-9]|5[0-9])$');
@@ -20,20 +25,14 @@ app.set('port', (process.env.PORT || 4000));
 
 app.get('/setHora/:hora/:id/:agente', (req, res) => {
     if (valHora(req.params['hora'])) {
-        dv = req.params['hora'];
+        hora = req.params['hora'];
         console.log('Hora correcta: ' + dv);
 
-        if (req.params['agente'] == process.env.AGENTE) { 
+        if (req.params['agente'] == process.env.AGENTE) {
             id_evento = req.params['id'];
             console.log('Validador verificado.');
-
-            db.get("fecha").delete();
-            db.default({ fecha: [] });
-            db.get('fecha').push(dv);
-            db.save();
-
+            setHora(hora, id_evento);
             console.log('Hora guardada: ' + getHora());
-
             segundosVal();
         }
     } else {
@@ -44,7 +43,9 @@ app.get('/setHora/:hora/:id/:agente', (req, res) => {
 })
 
 app.get('/getHora', (req, res) => {
-    res.send(db.get('fecha').value());
+    //res.send(db.get('fecha').value());
+    res.send(db.get('granada').get(0).get('hora').value());
+
 });
 
 app.listen(app.get('port'), () => {
@@ -95,7 +96,19 @@ function valHora(hora) {
 }
 
 function getHora() {
-    return db.get('fecha').value();
+    //return db.get('fecha').value();
+    return db.get('granada').get(0).get('hora').value();
+}
+
+function setHora(h,i) {
+    /*db.get("fecha").delete();
+    db.default({ fecha: [] });
+    db.get('fecha').push(h);
+    db.save();*/
+
+    db.get('granada').delete();
+    db.default({ granada: [] });
+    db.get('granada').push({idev: i, hora: h}).save();  
 }
 
 function resVal(diferencia) {
@@ -105,6 +118,27 @@ function resVal(diferencia) {
         return false;
     }
 }
+
+function comprobarDB() {
+    const r = './db.hora'
+  
+    try {
+      if (!fs.existsSync(r)) {
+        console.log('No existe la db. Creando...');
+        ruta = new sdb.localFileEngine('./db.hora');
+        db = new sdb(ruta);
+        db.default({ granada: [] });
+        db.get('granada').push([{idev: 'null', hora: 'null'}]).save();
+        
+      } else {
+        console.log('Existe la db.');
+        ruta = new sdb.localFileEngine('./db.hora');
+        db = new sdb(ruta);    
+      }
+    } catch(err) {
+      console.error(err)
+    }
+  }
 
 exports.valHora = valHora;
 exports.getHora = getHora;

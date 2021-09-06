@@ -18,12 +18,12 @@ describe('Tests unitarios', function(){
         });
     });
 
-    describe('Obtener hora db:', function(){
+    /*describe('Obtener hora db:', function(){
         it('Resultado', function(done){
             should.exist(server.getHora());
             done();
         });
-    });
+    });*/
 
     describe('Funcionamiento diferencia horaria:', function(){
         let datetest = new Date();
