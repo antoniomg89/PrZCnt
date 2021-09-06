@@ -76,6 +76,7 @@ function cHoras () {
             credential: firebase.credential.cert(JSON.parse(Buffer.from(process.env.SERVICE_ACCOUNT, 'base64').toString('ascii'))),
             databaseURL: process.env.FBR
         });
+        fb_iniciado = true;
     }
 
     const fbdb = firebase.database();
