@@ -53,7 +53,7 @@ app.listen(app.get('port'), () => {
 });
 
 function segundosVal() {
-    let res2 = dv.split(':');
+    let res2 = hora.split(':');
     sv = parseInt(res2[0])*3600 + parseInt(res2[1])*60 + parseInt(res2[2]);
 
     let d = new Date();
