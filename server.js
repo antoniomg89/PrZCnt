@@ -15,17 +15,6 @@ let db = new sdb(ruta);
 //const er = new RegExp(process.env.RE);
 const er = new RegExp('^(0{1}|[1-9]|1[0-9]|2[0-3]):(0{1}|[1-9]|1[0-9]|2[0-9]|3[0-9]|4[0-9]|5[0-9]):(0{1}|[1-9]|1[0-9]|2[0-9]|3[0-9]|4[0-9]|5[0-9])$');
 
-if(!fb_iniciado) {
-    firebase.initializeApp({
-        credential: firebase.credential.cert(JSON.parse(Buffer.from(process.env.SERVICE_ACCOUNT, 'base64').toString('ascii'))),
-        databaseURL: process.env.FBR
-    });
-    
-    const fbdb = firebase.database();
-    fb_iniciado = true;
-}
-
-
 app.use(express.static('contador'));
 app.set('port', (process.env.PORT || 4000));
 
@@ -81,6 +70,15 @@ function segundosVal() {
 
 function cHoras () {
     cuenta_activa = false;
+    
+    if (!fb_iniciado) {
+        firebase.initializeApp({
+            credential: firebase.credential.cert(JSON.parse(Buffer.from(process.env.SERVICE_ACCOUNT, 'base64').toString('ascii'))),
+            databaseURL: process.env.FBR
+        });
+    }
+
+    const fbdb = firebase.database();
 
     let fbContador = fbdb.ref(process.env.FB1 + id_evento + process.env.FB2);
     let contador_actualizacion = {
