@@ -60,11 +60,12 @@ function segundosVal() {
     setTimeout(cHoras, (298-(sa-sv))*1000);
     cuenta_activa = true;
 
-    if (cuenta_activa){
-        setInterval(function() {
+    setInterval(function() {
+        if (cuenta_activa){
             https.get("https://cuenta-atras.herokuapp.com/");
-        }, 60000);
-    }
+        }
+    }, 60000);
+    
     
 }
 
