@@ -26,7 +26,7 @@ app.set('port', (process.env.PORT || 4000));
 app.get('/setHora/:hora/:id/:agente', (req, res) => {
     if (valHora(req.params['hora'])) {
         hora = req.params['hora'];
-        console.log('Hora correcta: ' + dv);
+        console.log('Hora correcta: ' + hora);
 
         if (req.params['agente'] == process.env.AGENTE) {
             id_evento = req.params['id'];
