@@ -2,9 +2,11 @@ const express = require('express');
 const sdb = require("stormdb");
 const firebase = require("firebase-admin");
 require('dotenv').config();
+let https = require('https');
 
 const app = express();
 const ruta = new sdb.localFileEngine("./db.stormdb");
+//let cuenta_activa = false;
 
 let dv,sv,sa,id_evento;
 let db = new sdb(ruta);
@@ -15,27 +17,28 @@ const er = new RegExp('^(0{1}|[1-9]|1[0-9]|2[0-3]):(0{1}|[1-9]|1[0-9]|2[0-9]|3[0
 app.use(express.static('contador'));
 app.set('port', (process.env.PORT || 4000));
 
-//app.get(process.env.H, (req, res) => {
 app.get('/setHora/:hora/:id/:agente', (req, res) => {
     if (valHora(req.params['hora'])) {
-        console.log('Hora correcta: ' + req.params['hora']);
+        dv = req.params['hora'];
+        console.log('Hora correcta: ' + dv);
 
         if (req.params['agente'] == process.env.AGENTE) { 
             id_evento = req.params['id'];
             console.log('Validador verificado.');
-            dv = req.params['hora'];
 
             db.get("fecha").delete();
             db.default({ fecha: [] });
-            db.get('fecha').push(req.params['hora']);
+            db.get('fecha').push(dv);
             db.save();
+
+            console.log('Hora guardada: ' + getHora());
 
             segundosVal();
         }
     } else {
         console.log('Hora no válida');
     }
-    res.send('');
+    res.send('ok');
     
 })
 
@@ -54,9 +57,19 @@ function segundosVal() {
     let d = new Date();
     sa = d.getUTCSeconds() + d.getUTCMinutes()*60 + ((d.getUTCHours()+2)%24)*3600;
     setTimeout(cHoras, (298-(sa-sv))*1000);
+    cuenta_activa = true;
+
+    if (cuenta_activa){
+        setInterval(function() {
+            https.get("https://cuenta-atras.herokuapp.com/");
+        }, 60000);
+    }
+    
 }
 
 function cHoras () {
+    cuenta_activa = false;
+    
     firebase.initializeApp({
         credential: firebase.credential.cert(JSON.parse(Buffer.from(process.env.SERVICE_ACCOUNT, 'base64').toString('ascii'))),
         databaseURL: process.env.FBR
