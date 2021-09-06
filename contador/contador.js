@@ -32,6 +32,7 @@ function validacionHora() {
     req.send(null);
 
     if (req.status == 200){
+        console.log('Respuesta: ' + req.responseText);
         if (req.responseText != "null") {
             let res1 = req.responseText.split('"');
             let res2 = res1[1].split(':');
