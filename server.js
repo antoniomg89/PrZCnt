@@ -40,7 +40,7 @@ app.get('/setHora/:hora/:id/:agente', (req, res) => {
 })
 
 app.get('/getHora', (req, res) => {
-    res.send(db.get('granada').get(0).get('hora').value());
+    res.send(getHora());
 
 });
 
@@ -98,6 +98,10 @@ function setHora(h,i) {
     db.get('granada').push({idev: i, hora: h}).save();  
 }
 
+function getHora() {
+    return db.get('granada').get(0).get('hora').value();
+}
+
 function resVal(diferencia) {
     if (diferencia > 0 && diferencia <= 300) {
         return true;
@@ -129,3 +133,4 @@ function comprobarDB() {
 
 exports.valHora = valHora;
 exports.resVal = resVal;
+exports.getHora = getHora;

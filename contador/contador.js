@@ -3,11 +3,13 @@ let url = 'https://cuenta-atras.herokuapp.com/getHora';
 //let url = 'http://localhost:8080/getHora';
 
 let req = new XMLHttpRequest();
-let lect = false;
+//let lect = false;
 
-if (!lect) {
+/*if (!lect) {
     validacionHora();
-}
+}*/
+
+validacionHora();
 
 function getCA(t, e) {
     let timer = t;
@@ -45,7 +47,7 @@ function validacionHora() {
                 getCA(300-dif,gca);
             }
     
-            lect = true;
+            //lect = true;
         }
         
     }

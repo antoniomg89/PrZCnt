@@ -26,9 +26,16 @@ describe('Tests unitarios', function(){
             done();
         });
     });
+
+    describe('Hora db correcta:', function(){
+        it('Resultado', function(done){
+            expect(server.getHora()).equal('null');
+            done();
+        });
+    });
 });
 
-describe('Tests funcionales', function(){
+/*describe('Tests funcionales', function(){
     describe('Estado del servidor /getHora:', function(){
         it("returns status 200", function(done) {
             request(url, function(error, response, body) {
@@ -37,4 +44,4 @@ describe('Tests funcionales', function(){
             });
           });
     });
-});
+});*/
