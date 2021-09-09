@@ -28,6 +28,7 @@ describe('Tests unitarios', function(){
     });
 
     describe('Hora db correcta:', function(){
+        server.comprobarDB();
         it('Resultado', function(done){
             expect(server.getHora()).equal('null');
             done();

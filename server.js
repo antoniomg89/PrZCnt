@@ -133,4 +133,5 @@ function comprobarDB() {
 
 exports.valHora = valHora;
 exports.resVal = resVal;
+exports.comprobarDB = comprobarDB;
 exports.getHora = getHora;
