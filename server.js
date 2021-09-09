@@ -60,7 +60,7 @@ function segundosVal() {
         if (cuenta_activa){
             https.get("https://cuenta-atras.herokuapp.com/");
         }
-    }, 120000);
+    }, 60000);
     
     
 }
