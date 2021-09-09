@@ -6,7 +6,7 @@ let https = require('https');
 const fs = require('fs');
 
 const app = express();
-let cuenta_activa = false;
+//let cuenta_activa = false;
 let fb_iniciado = false;
 let db,ruta;
 
@@ -57,17 +57,17 @@ function segundosVal() {
     setTimeout(cHoras, (298-(sa-sv))*1000);
     cuenta_activa = true;
 
-    setInterval(function() {
+    /*setInterval(function() {
         if (cuenta_activa){
             https.get("https://cuenta-atras.herokuapp.com/");
         }
-    }, 180000);
+    }, 180000);*/
     
     
 }
 
 function cHoras () {
-    cuenta_activa = false;
+    //cuenta_activa = false;
     
     if (!fb_iniciado) {
         firebase.initializeApp({
