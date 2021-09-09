@@ -12,7 +12,7 @@ let db,ruta;
 
 let hora,sv,sa,id_evento;
 
-comprobarDB();
+//comprobarDB();
 
 const er = new RegExp('^(0{1}|[1-9]|1[0-9]|2[0-3]):(0{1}|[1-9]|1[0-9]|2[0-9]|3[0-9]|4[0-9]|5[0-9]):(0{1}|[1-9]|1[0-9]|2[0-9]|3[0-9]|4[0-9]|5[0-9])$');
 
@@ -27,6 +27,7 @@ app.get('/setHora/:hora/:id/:agente', (req, res) => {
         if (req.params['agente'] == process.env.AGENTE) {
             id_evento = req.params['id'];
             console.log('Validador verificado.');
+            comprobarDB();
             setHora(hora, id_evento);
             console.log('Hora guardada: ' + getHora());
             segundosVal();
@@ -60,7 +61,7 @@ function segundosVal() {
         if (cuenta_activa){
             https.get("https://cuenta-atras.herokuapp.com/");
         }
-    }, 60000);
+    }, 180000);
     
     
 }
