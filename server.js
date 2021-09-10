@@ -8,7 +8,7 @@ const fs = require('fs');
 const app = express();
 //let cuenta_activa = false;
 let fb_iniciado = false;
-let db,ruta;
+let db,ruta,fin;
 
 let hora,sv,sa,id_evento;
 
@@ -19,13 +19,14 @@ const er = new RegExp('^(0{1}|[1-9]|1[0-9]|2[0-3]):(0{1}|[1-9]|1[0-9]|2[0-9]|3[0
 app.use(express.static('contador'));
 app.set('port', (process.env.PORT || 4000));
 
-app.get('/setHora/:hora/:id/:agente', (req, res) => {
+app.get('/setHora/:hora/:id/:agente/:fin', (req, res) => {
     if (valHora(req.params['hora'])) {
         hora = req.params['hora'];
         console.log('Hora correcta: ' + hora);
 
         if (req.params['agente'] == process.env.AGENTE) {
             id_evento = req.params['id'];
+            fin = req.params['fin'];
             console.log('Validador verificado.');
             comprobarDB();
             setHora(hora, id_evento);
@@ -80,11 +81,20 @@ function cHoras () {
     const fbdb = firebase.database();
 
     let fbContador = fbdb.ref(process.env.FB1 + id_evento + process.env.FB2);
-    let contador_actualizacion = {
-        estado: 'false' 
-    }
 
+    if (fin == 'true') {
+        let contador_actualizacion = {
+            estado: 'fin' 
+        }
+
+    } else {
+        let contador_actualizacion = {
+            estado: 'false' 
+        }
+    }
+    
     fbContador.update(contador_actualizacion);
+    console.log('Contador actualizado en fb');
 }
 
 function valHora(hora) {
