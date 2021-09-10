@@ -79,7 +79,7 @@ function cHoras () {
     }
 
     const fbdb = firebase.database();
-
+    let contador_actualizacion;
     let fbContador = fbdb.ref(process.env.FB1 + id_evento + process.env.FB2);
 
     if (fin == 'true') {
