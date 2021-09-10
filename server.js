@@ -83,12 +83,12 @@ function cHoras () {
     let fbContador = fbdb.ref(process.env.FB1 + id_evento + process.env.FB2);
 
     if (fin == 'true') {
-        let contador_actualizacion = {
+        contador_actualizacion = {
             estado: 'fin' 
         }
 
     } else {
-        let contador_actualizacion = {
+        contador_actualizacion = {
             estado: 'false' 
         }
     }
