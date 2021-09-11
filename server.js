@@ -84,7 +84,8 @@ function cHoras () {
 
     if (fin == 'true') {
         contador_actualizacion = {
-            estado: 'fin' 
+            estado: 'false',
+            qr: 'fin'
         }
 
     } else {
