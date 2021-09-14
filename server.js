@@ -6,13 +6,9 @@ let https = require('https');
 const fs = require('fs');
 
 const app = express();
-//let cuenta_activa = false;
 let fb_iniciado = false;
 let db,ruta;
-
 let hora,sv,sa,id_evento;
-
-//comprobarDB();
 
 const er = new RegExp('^(0{1}|[1-9]|1[0-9]|2[0-3]):(0{1}|[1-9]|1[0-9]|2[0-9]|3[0-9]|4[0-9]|5[0-9]):(0{1}|[1-9]|1[0-9]|2[0-9]|3[0-9]|4[0-9]|5[0-9])$');
 
@@ -84,18 +80,6 @@ function cHoras () {
     }
 
     let fbContador = fbdb.ref(process.env.FB1 + id_evento + process.env.FB2);
-
-    /*if (fin == 'true') {
-        contador_actualizacion = {
-            estado: 'false',
-            qr: 'fin'
-        }
-
-    } else {
-        contador_actualizacion = {
-            estado: 'false' 
-        }
-    }*/
     
     fbContador.update(contador_actualizacion);
     console.log('Contador actualizado en fb');

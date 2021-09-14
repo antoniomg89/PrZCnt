@@ -1,9 +1,4 @@
 let expect  = require("chai").expect;
-let request = require("request");
-
-let url = 'https://cuenta-atras.herokuapp.com/getHora';
-
-
 let server = require('../server.js'); 
 
 describe('Tests unitarios', function(){
@@ -35,14 +30,3 @@ describe('Tests unitarios', function(){
         });
     });
 });
-
-/*describe('Tests funcionales', function(){
-    describe('Estado del servidor /getHora:', function(){
-        it("returns status 200", function(done) {
-            request(url, function(error, response, body) {
-              expect(response.statusCode).to.equal(200);
-              done();
-            });
-          });
-    });
-});*/
