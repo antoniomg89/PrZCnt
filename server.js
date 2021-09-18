@@ -51,7 +51,9 @@ function segundosVal() {
 
     let d = new Date();
     sa = d.getUTCSeconds() + d.getUTCMinutes()*60 + ((d.getUTCHours()+2)%24)*3600;
-    setTimeout(cHoras, (298-(sa-sv))*1000);
+    //setTimeout(cHoras, (298-(sa-sv))*1000);
+    setTimeout(cHoras, (120-(sa-sv)*1000));
+
     cuenta_activa = true;
 
     /*setInterval(function() {

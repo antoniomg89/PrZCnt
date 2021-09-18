@@ -38,8 +38,12 @@ function validacionHora() {
             let sa = d.getUTCSeconds() + d.getUTCMinutes()*60 + ((d.getUTCHours()+2)%24)*3600;
             let dif = sa-rs;
 
-            if (dif > 0 && dif <= 300) {
+            /*if (dif > 0 && dif <= 300) {
                 getCA(300-dif,gca);
+            }*/
+
+            if (dif > 0 && dif <= 120) {
+                getCA(120-dif,gca);
             }
     
         }
